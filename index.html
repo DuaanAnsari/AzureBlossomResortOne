@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+.image-container {
+  width: 100%;        /* Take the full width of the viewport */
+  height: 100vh;      /* Set the height to 100% of the viewport height */
+  overflow: auto;     /* Make the container scrollable if the image is too large */
+  display: flex;      /* Use flexbox to center the image */
+  justify-content: center; /* Center the image horizontally */
+  align-items: center; /* Center the image vertically */
+}
+
+.zoomable-image {
+  width: 100%;        /* Make the image take up full width */
+  height: auto;       /* Maintain aspect ratio */
+  object-fit: contain; /* Keep the aspect ratio without cropping */
+  transition: transform 0.3s ease; /* Smooth transition for zoom */
+  cursor: pointer;   /* Show pointer cursor when hovering */
+}
+
+/* Optional: Adding zoom on hover */
+.zoomable-image:hover {
+  transform: scale(1.1); /* Slight zoom effect when hovered */
+}
+.sticky-button {
+  position: fixed;
+  bottom: 20px;  /* Distance from the bottom of the screen */
+  right: 20px;   /* Distance from the right side of the screen */
+  padding: 10px 20px;  /* Smaller padding */
+  background-color: green;
+  font-size: 14px;  /* Smaller font size */
+  color: white;  /* Set text color to white */
+  border: none;
+  border-radius: 25px;  /* Slightly rounded corners */
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
+  opacity: 1;
+  transition: opacity 1s ease;
+  z-index: 1000;
+}
+
+.sticky-button a {
+  color: white;  /* Ensure the link has the same color as the button text */
+  text-decoration: none;  /* Remove underline */
+  display: block;  /* Make the link fill the button */
+  text-align: center;  /* Center the text inside the button */
+}
+
+.sticky-button:hover {
+  background-color: #006400;  /* Darker green when hovered */
+}
+
+
+    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bootstrap Site</title>
+ </head>
+<body>
+  <button class="sticky-button"><a href="Video.mp4">Open Video</a></button>
+    <div class="image-container">
+        <img src="menu.jpg" alt="Menu" class="zoomable-image">
+      </div>
+      <script>
+        const image = document.querySelector('.zoomable-image');
+let scale = 1; // Initial scale
+
+// Listen to the wheel event for zooming in/out
+image.addEventListener('wheel', function(e) {
+  e.preventDefault();  // Prevent the default scrolling behavior
+  
+  // Zoom in or out based on the wheel direction
+  if (e.deltaY < 0) {
+    scale += 0.1;  // Zoom in
+  } else {
+    scale -= 0.1;  // Zoom out
+  }
+
+  // Set a max and min zoom level
+  if (scale > 2) scale = 2;  // Max zoom
+  if (scale < 1) scale = 1;  // Min zoom
+  
+  // Apply zoom
+  image.style.transform = `scale(${scale})`;
+});
+
+      </script>
+</body>
+</html>
